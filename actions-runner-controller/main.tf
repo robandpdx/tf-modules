@@ -2,9 +2,9 @@
 # module resources
 ###
 
-resource "kubernetes_namespace" "actions-runner-system" {
+resource "kubernetes_namespace" "arc-systems" {
   metadata {
-    name = "actions-runner-system"
+    name = "arc-systems"
   }
 }
 
@@ -19,20 +19,13 @@ resource "kubernetes_secret" "controller-manager" {
   type = "Opaque"
 }
 
-resource "helm_release" "actions-runner-controller" {
-  name = "actions-runner-controller"
+resource "helm_release" "arc" {
+  name = "arc"
 
-  repository = "https://actions-runner-controller.github.io/actions-runner-controller"
+  repository = "oci://ghcr.io/actions/actions-runner-controller-charts/actions-runner-controller-2"
 
-  chart     = "actions-runner-controller"
-  namespace = kubernetes_namespace.actions-runner-system.metadata[0].name
+  chart     = "arc"
+  version   = "0.1.0"
+  namespace = kubernetes_namespace.arc-systems.metadata[0].name
   timeout   = 300
-  set {
-    name    = "githubWebhookServer.enabled"
-    value   = "true"
-  }
-  set {
-    name    = "authSecret.github_token"
-    value   = "${var.github_token}"
-  }
 }
