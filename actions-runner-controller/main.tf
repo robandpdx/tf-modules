@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "arc-systems" {
 resource "kubernetes_secret" "controller-manager" {
   metadata {
     name      = "controller-manager"
-    namespace = kubernetes_namespace.actions-runner-system.metadata[0].name
+    namespace = kubernetes_namespace.arc-systems.metadata[0].name
   }
   data = {
     github_token = "${var.github_token}"
