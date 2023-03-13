@@ -56,7 +56,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool_1" {
 
 resource "local_file" "kubeconfig" {
     depends_on   = [azurerm_kubernetes_cluster.aks]
-    filename     = "./kubeconfig"
+    filename     = var.kubeconfig_file
     content      = azurerm_kubernetes_cluster.aks.kube_config_raw
 }
 

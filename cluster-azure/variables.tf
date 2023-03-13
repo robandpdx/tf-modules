@@ -37,3 +37,9 @@ variable "vm_size" {
   type        = string
   default     = "Standard_DS2_v2"
 }
+
+variable "kubeconfig_file" {
+  description = "The path to the kubeconfig file generated."
+  type        = string
+  default     = "./kubeconfig"
+}
