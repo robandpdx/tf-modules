@@ -37,13 +37,12 @@ resource "azurerm_container_group" "container" {
   dns_name_label      = "${var.dns_prefix}"
   os_type = "Linux"
 
-  secure_environment_variables = "${var.secure_environment_variables}"
-
   container {
     name   = var.container_name
     image  = var.container_image
     cpu    = "1"
     memory = "1.5"
+    secure_environment_variables = "${var.secure_environment_variables}"
 
     ports {
       port     = 3000
