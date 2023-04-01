@@ -17,6 +17,12 @@ variable "dns_prefix" {
   description = "DNS prefix to use for the container instance."
 }
 
+variable "environment_variables" {
+  description = "Environment variables to use for the container instance."
+  type = map(string)
+  default = {}
+}
+
 variable "secure_environment_variables" {
   description = "Environment variables to use for the container instance."
   type = map(string)
@@ -34,7 +40,7 @@ resource "azurerm_container_group" "container" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_address_type     = "Public"
-  dns_name_label      = "${var.dns_prefix}"
+  dns_name_label      = var.dns_prefix
   os_type = "Linux"
 
   container {
@@ -42,7 +48,8 @@ resource "azurerm_container_group" "container" {
     image  = var.container_image
     cpu    = "1"
     memory = "1.5"
-    secure_environment_variables = "${var.secure_environment_variables}"
+    environment_variables = var.environment_variables
+    secure_environment_variables = var.secure_environment_variables
 
     ports {
       port     = 3000
