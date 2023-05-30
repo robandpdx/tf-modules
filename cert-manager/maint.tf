@@ -9,7 +9,7 @@ resource "helm_release" "cm" {
   create_namespace = false
   chart            = "cert-manager"
   repository       = "https://charts.jetstack.io"
-  version          = "v1.5.3"
+  version          = "v1.12.1"
   values = [
     file("${path.module}/values.yaml")
   ]
