@@ -23,6 +23,11 @@ variable "environment_variables" {
   default = {}
 }
 
+variable "port" {
+  description = "Port to use for the container instance."
+  default = 3000
+}
+
 variable "secure_environment_variables" {
   description = "Environment variables to use for the container instance."
   type = map(string)
@@ -52,7 +57,7 @@ resource "azurerm_container_group" "container" {
     secure_environment_variables = var.secure_environment_variables
 
     ports {
-      port     = 3000
+      port     = var.port
       protocol = "TCP"
     }
   }
