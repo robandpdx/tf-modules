@@ -28,6 +28,16 @@ variable "port" {
   default = 3000
 }
 
+variable "memory" {
+  description = "Memory to use for the container instance."
+  default = "1.5"
+}
+
+variable "cpu" {
+  description = "CPU to use for the container instance."
+  default = "1"
+}
+
 variable "secure_environment_variables" {
   description = "Environment variables to use for the container instance."
   type = map(string)
@@ -51,8 +61,8 @@ resource "azurerm_container_group" "container" {
   container {
     name   = var.container_name
     image  = var.container_image
-    cpu    = "1"
-    memory = "1.5"
+    cpu    = vars.cpu
+    memory = vars.memory
     environment_variables = var.environment_variables
     secure_environment_variables = var.secure_environment_variables
 
