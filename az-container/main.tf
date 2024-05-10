@@ -61,8 +61,8 @@ resource "azurerm_container_group" "container" {
   container {
     name   = var.container_name
     image  = var.container_image
-    cpu    = vars.cpu
-    memory = vars.memory
+    cpu    = var.cpu
+    memory = var.memory
     environment_variables = var.environment_variables
     secure_environment_variables = var.secure_environment_variables
 
