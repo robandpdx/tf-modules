@@ -30,6 +30,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     min_count                    = 1
     node_count                   = 1
     tags                         = var.tags
+    upgrade_settings {
+      max_surge = "25%"
+    }
   }
 
   maintenance_window {
