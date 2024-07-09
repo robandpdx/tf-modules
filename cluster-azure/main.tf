@@ -32,6 +32,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     tags                         = var.tags
   }
 
+  maintenance_window {
+    allowed {
+      day = "Sunday"
+      hours = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }
