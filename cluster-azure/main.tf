@@ -17,6 +17,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix                = "dns-${var.prefix}-${var.environment}-${azurerm_resource_group.aks.location}"
   automatic_channel_upgrade = "stable"
   http_application_routing_enabled = true
+  node_os_channel_upgrade = "SecurityPatch"
 
   default_node_pool {
     name                         = "systempool"
