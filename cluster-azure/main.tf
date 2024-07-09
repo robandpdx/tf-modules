@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   maintenance_window_node_os {
     frequency   = "Weekly"
-    day_of_week = "Saturday"
+    day_of_week = "Wednesday"
     interval    = 1
     duration    = 4
     utc_offset  = "+00:00"
