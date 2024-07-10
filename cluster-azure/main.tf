@@ -95,4 +95,5 @@ resource "azurerm_container_registry" "acr" {
   location            = azurerm_resource_group.aks.location
   sku                 = "Basic"
   admin_enabled       = false
+  tags                  = var.tags
 }
