@@ -93,7 +93,7 @@ resource "azurerm_container_registry" "acr" {
   name                = "${var.prefix}ContainerRegistry"
   resource_group_name = azurerm_resource_group.aks.name
   location            = azurerm_resource_group.aks.location
-  sku                 = "Basic"
+  sku                 = "Premium"
   admin_enabled       = false
   tags                  = var.tags
 }
