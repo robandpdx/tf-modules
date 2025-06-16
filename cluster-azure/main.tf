@@ -24,7 +24,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     only_critical_addons_enabled = true
     vm_size                      = var.vm_size
     zones                        = [1, 2, 3]
-    auto_scaling_enabled          = true
+    auto_scaling_enabled         = true
     max_pods                     = 250
     max_count                    = 3
     min_count                    = 1
@@ -74,7 +74,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool_1" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
   vm_size               = var.vm_size
   zones                 = [1, 2, 3]
-  enable_auto_scaling   = true
+  auto_scaling_enabled  = true
   max_count             = 10
   max_pods              = 250
   min_count             = 2
