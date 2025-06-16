@@ -15,16 +15,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
   node_resource_group       = "${azurerm_resource_group.aks.name}-nodes"
   kubernetes_version        = var.kubernetes_version
   dns_prefix                = "dns-${var.prefix}-${var.environment}-${azurerm_resource_group.aks.location}"
-  automatic_channel_upgrade = "stable"
+  automatic_upgrade_channel = "stable"
   http_application_routing_enabled = true
-  node_os_channel_upgrade = "SecurityPatch"
+  node_os_upgrade_channel = "SecurityPatch"
 
   default_node_pool {
     name                         = "systempool"
     only_critical_addons_enabled = true
     vm_size                      = var.vm_size
     zones                        = [1, 2, 3]
-    enable_auto_scaling          = true
+    auto_scaling_enabled          = true
     max_pods                     = 250
     max_count                    = 3
     min_count                    = 1
