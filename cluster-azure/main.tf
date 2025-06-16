@@ -16,7 +16,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   kubernetes_version        = var.kubernetes_version
   dns_prefix                = "dns-${var.prefix}-${var.environment}-${azurerm_resource_group.aks.location}"
   automatic_upgrade_channel = "stable"
-  http_application_routing_enabled = true
   node_os_upgrade_channel = "SecurityPatch"
 
   default_node_pool {
