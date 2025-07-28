@@ -104,7 +104,7 @@ resource "azurerm_container_group" "container" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  ip_address_type    = "Private"
+  ip_address_type    = "Public"
   network_profile_id = azurerm_network_profile.container_profile.id
   os_type            = "Linux"
 
