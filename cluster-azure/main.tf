@@ -94,5 +94,6 @@ resource "azurerm_container_registry" "acr" {
   location            = azurerm_resource_group.aks.location
   sku                 = "Premium"
   admin_enabled       = false
+  public_network_access_enabled = false
   tags                  = var.tags
 }
