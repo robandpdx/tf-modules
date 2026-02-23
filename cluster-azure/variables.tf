@@ -43,3 +43,9 @@ variable "kubeconfig_file" {
   type        = string
   default     = "./kubeconfig"
 }
+
+variable "admin_group_object_ids" {
+  description = "List of Azure AD group object IDs that will have admin access to the cluster"
+  type        = list(string)
+  default     = []
+}
