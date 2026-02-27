@@ -49,3 +49,9 @@ variable "admin_group_object_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "azure_tenant_id" {
+  description = "Azure Tenant ID for the cluster"
+  type        = string
+  default     = null
+}
