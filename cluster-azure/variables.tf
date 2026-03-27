@@ -55,3 +55,26 @@ variable "azure_tenant_id" {
   type        = string
   default     = null
 }
+
+variable "web_app_routing_enabled" {
+  description = "Enable the AKS Application Routing add-on."
+  type        = bool
+  default     = false
+}
+
+variable "web_app_routing_dns_zone_ids" {
+  description = "List of Azure DNS zone resource IDs to attach to the AKS Application Routing add-on. Leave empty to enable the add-on without Azure DNS integration."
+  type        = list(string)
+  default     = []
+}
+
+variable "web_app_routing_default_nginx_controller" {
+  description = "Default ingress exposure mode for the AKS Application Routing NGINX controller."
+  type        = string
+  default     = "AnnotationControlled"
+
+  validation {
+    condition     = contains(["None", "Internal", "External", "AnnotationControlled"], var.web_app_routing_default_nginx_controller)
+    error_message = "web_app_routing_default_nginx_controller must be one of None, Internal, External, or AnnotationControlled."
+  }
+}

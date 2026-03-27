@@ -46,5 +46,13 @@ output "password" {
 }
 
 output "fqdn" {
-  value     = azurerm_kubernetes_cluster.aks.fqdn
+  value = azurerm_kubernetes_cluster.aks.fqdn
+}
+
+output "web_app_routing_enabled" {
+  value = var.web_app_routing_enabled
+}
+
+output "web_app_routing_identity" {
+  value = try(azurerm_kubernetes_cluster.aks.web_app_routing[0].web_app_routing_identity[0], null)
 }

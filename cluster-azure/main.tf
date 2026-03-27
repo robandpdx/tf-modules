@@ -16,7 +16,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   kubernetes_version        = var.kubernetes_version
   dns_prefix                = "dns-${var.prefix}-${var.environment}-${azurerm_resource_group.aks.location}"
   automatic_upgrade_channel = "stable"
-  node_os_upgrade_channel = "SecurityPatch"
+  node_os_upgrade_channel   = "SecurityPatch"
 
   default_node_pool {
     name                         = "systempool"
@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   maintenance_window {
     allowed {
-      day = "Sunday"
+      day   = "Sunday"
       hours = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
     }
   }
@@ -66,10 +66,27 @@ resource "azurerm_kubernetes_cluster" "aks" {
   azure_active_directory_role_based_access_control {
     azure_rbac_enabled     = true
     admin_group_object_ids = var.admin_group_object_ids
-    tenant_id = var.azure_tenant_id
+    tenant_id              = var.azure_tenant_id
+  }
+
+  dynamic "web_app_routing" {
+    for_each = var.web_app_routing_enabled ? [1] : []
+
+    content {
+      dns_zone_ids             = var.web_app_routing_dns_zone_ids
+      default_nginx_controller = var.web_app_routing_default_nginx_controller
+    }
   }
 
   tags = var.tags
+}
+
+resource "azurerm_role_assignment" "web_app_routing_dns_zone_contributor" {
+  for_each = var.web_app_routing_enabled ? toset(var.web_app_routing_dns_zone_ids) : toset([])
+
+  scope                = each.value
+  role_definition_name = "DNS Zone Contributor"
+  principal_id         = azurerm_kubernetes_cluster.aks.web_app_routing[0].web_app_routing_identity[0].object_id
 }
 
 #kubernetes_cluster_node_pool
@@ -89,17 +106,17 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool_1" {
 }
 
 resource "local_file" "kubeconfig" {
-    depends_on   = [azurerm_kubernetes_cluster.aks]
-    filename     = var.kubeconfig_file
-    content      = azurerm_kubernetes_cluster.aks.kube_config_raw
+  depends_on = [azurerm_kubernetes_cluster.aks]
+  filename   = var.kubeconfig_file
+  content    = azurerm_kubernetes_cluster.aks.kube_config_raw
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "${var.prefix}ContainerRegistry"
-  resource_group_name = azurerm_resource_group.aks.name
-  location            = azurerm_resource_group.aks.location
-  sku                 = "Premium"
-  admin_enabled       = false
+  name                          = "${var.prefix}ContainerRegistry"
+  resource_group_name           = azurerm_resource_group.aks.name
+  location                      = azurerm_resource_group.aks.location
+  sku                           = "Premium"
+  admin_enabled                 = false
   public_network_access_enabled = false
-  tags                  = var.tags
+  tags                          = var.tags
 }
